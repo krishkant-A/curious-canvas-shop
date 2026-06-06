@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as NewReleasesRouteImport } from './routes/new-releases'
 import { Route as BestsellersRouteImport } from './routes/bestsellers'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TrendingRoute = TrendingRouteImport.update({
+  id: '/trending',
+  path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewReleasesRoute = NewReleasesRouteImport.update({
   id: '/new-releases',
   path: '/new-releases',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
   '/new-releases': typeof NewReleasesRoute
+  '/trending': typeof TrendingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
   '/new-releases': typeof NewReleasesRoute
+  '/trending': typeof TrendingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
   '/new-releases': typeof NewReleasesRoute
+  '/trending': typeof TrendingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bestsellers' | '/new-releases'
+  fullPaths: '/' | '/bestsellers' | '/new-releases' | '/trending'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bestsellers' | '/new-releases'
-  id: '__root__' | '/' | '/bestsellers' | '/new-releases'
+  to: '/' | '/bestsellers' | '/new-releases' | '/trending'
+  id: '__root__' | '/' | '/bestsellers' | '/new-releases' | '/trending'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BestsellersRoute: typeof BestsellersRoute
   NewReleasesRoute: typeof NewReleasesRoute
+  TrendingRoute: typeof TrendingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trending': {
+      id: '/trending'
+      path: '/trending'
+      fullPath: '/trending'
+      preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/new-releases': {
       id: '/new-releases'
       path: '/new-releases'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BestsellersRoute: BestsellersRoute,
   NewReleasesRoute: NewReleasesRoute,
+  TrendingRoute: TrendingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
