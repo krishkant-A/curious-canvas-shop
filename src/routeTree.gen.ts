@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as NewReleasesRouteImport } from './routes/new-releases'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as BestsellersRouteImport } from './routes/bestsellers'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const TrendingRoute = TrendingRouteImport.update({
 const NewReleasesRoute = NewReleasesRouteImport.update({
   id: '/new-releases',
   path: '/new-releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BestsellersRoute = BestsellersRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
   '/trending': typeof TrendingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
   '/trending': typeof TrendingRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
   '/trending': typeof TrendingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bestsellers' | '/new-releases' | '/trending'
+  fullPaths: '/' | '/bestsellers' | '/cart' | '/new-releases' | '/trending'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bestsellers' | '/new-releases' | '/trending'
-  id: '__root__' | '/' | '/bestsellers' | '/new-releases' | '/trending'
+  to: '/' | '/bestsellers' | '/cart' | '/new-releases' | '/trending'
+  id:
+    | '__root__'
+    | '/'
+    | '/bestsellers'
+    | '/cart'
+    | '/new-releases'
+    | '/trending'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BestsellersRoute: typeof BestsellersRoute
+  CartRoute: typeof CartRoute
   NewReleasesRoute: typeof NewReleasesRoute
   TrendingRoute: typeof TrendingRoute
 }
@@ -83,6 +99,13 @@ declare module '@tanstack/react-router' {
       path: '/new-releases'
       fullPath: '/new-releases'
       preLoaderRoute: typeof NewReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bestsellers': {
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BestsellersRoute: BestsellersRoute,
+  CartRoute: CartRoute,
   NewReleasesRoute: NewReleasesRoute,
   TrendingRoute: TrendingRoute,
 }
