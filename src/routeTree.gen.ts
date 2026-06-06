@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as NewReleasesRouteImport } from './routes/new-releases'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as BestsellersRouteImport } from './routes/bestsellers'
@@ -19,6 +20,11 @@ import { Route as ProductIdRouteImport } from './routes/product.$id'
 const TrendingRoute = TrendingRouteImport.update({
   id: '/trending',
   path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewReleasesRoute = NewReleasesRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/bestsellers': typeof BestsellersRoute
   '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
   '/trending': typeof TrendingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/bestsellers': typeof BestsellersRoute
   '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
   '/trending': typeof TrendingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/bestsellers': typeof BestsellersRoute
   '/cart': typeof CartRoute
   '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
   '/trending': typeof TrendingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/bestsellers'
     | '/cart'
     | '/new-releases'
+    | '/search'
     | '/trending'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/bestsellers'
     | '/cart'
     | '/new-releases'
+    | '/search'
     | '/trending'
     | '/product/$id'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/bestsellers'
     | '/cart'
     | '/new-releases'
+    | '/search'
     | '/trending'
     | '/product/$id'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   BestsellersRoute: typeof BestsellersRoute
   CartRoute: typeof CartRoute
   NewReleasesRoute: typeof NewReleasesRoute
+  SearchRoute: typeof SearchRoute
   TrendingRoute: typeof TrendingRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/trending'
       fullPath: '/trending'
       preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-releases': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   BestsellersRoute: BestsellersRoute,
   CartRoute: CartRoute,
   NewReleasesRoute: NewReleasesRoute,
+  SearchRoute: SearchRoute,
   TrendingRoute: TrendingRoute,
   ProductIdRoute: ProductIdRoute,
 }
