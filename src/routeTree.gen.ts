@@ -9,38 +9,155 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as NewReleasesRouteImport } from './routes/new-releases'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as BestsellersRouteImport } from './routes/bestsellers'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
+const TrendingRoute = TrendingRouteImport.update({
+  id: '/trending',
+  path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewReleasesRoute = NewReleasesRouteImport.update({
+  id: '/new-releases',
+  path: '/new-releases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BestsellersRoute = BestsellersRouteImport.update({
+  id: '/bestsellers',
+  path: '/bestsellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
+  '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
+  '/trending': typeof TrendingRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
+  '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
+  '/trending': typeof TrendingRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bestsellers': typeof BestsellersRoute
+  '/cart': typeof CartRoute
+  '/new-releases': typeof NewReleasesRoute
+  '/search': typeof SearchRoute
+  '/trending': typeof TrendingRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/bestsellers'
+    | '/cart'
+    | '/new-releases'
+    | '/search'
+    | '/trending'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/bestsellers'
+    | '/cart'
+    | '/new-releases'
+    | '/search'
+    | '/trending'
+    | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/bestsellers'
+    | '/cart'
+    | '/new-releases'
+    | '/search'
+    | '/trending'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BestsellersRoute: typeof BestsellersRoute
+  CartRoute: typeof CartRoute
+  NewReleasesRoute: typeof NewReleasesRoute
+  SearchRoute: typeof SearchRoute
+  TrendingRoute: typeof TrendingRoute
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trending': {
+      id: '/trending'
+      path: '/trending'
+      fullPath: '/trending'
+      preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-releases': {
+      id: '/new-releases'
+      path: '/new-releases'
+      fullPath: '/new-releases'
+      preLoaderRoute: typeof NewReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bestsellers': {
+      id: '/bestsellers'
+      path: '/bestsellers'
+      fullPath: '/bestsellers'
+      preLoaderRoute: typeof BestsellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +165,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BestsellersRoute: BestsellersRoute,
+  CartRoute: CartRoute,
+  NewReleasesRoute: NewReleasesRoute,
+  SearchRoute: SearchRoute,
+  TrendingRoute: TrendingRoute,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
