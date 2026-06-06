@@ -10,6 +10,9 @@ export type Product = {
   reviews: number;
 };
 
+import mushroomLamp from "@/assets/mushroom-lamp.jpg";
+import libraryCandle from "@/assets/library-candle.jpg";
+
 // Curated Unsplash photos matched to each product
 const u = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=80`;
 
@@ -21,8 +24,8 @@ export const products: Product[] = [
   { id: "5", name: "Hand-Stitched Leather Journal", price: 54, image: u("1531346878377-a5be20888e57"), category: "bestsellers", seller: "InkAndHide", rating: 5.0, reviews: 870 },
   { id: "6", name: "Celestial Wall Tapestry", price: 78, image: u("1532634922-8fe0b757fb13"), category: "bestsellers", seller: "MoonLoom", rating: 4.6, reviews: 412 },
 
-  { id: "7", name: "Mushroom Ceramic Lamp", price: 96, image: u("1633113216109-bba0c64f0a86"), category: "new", tag: "New", seller: "GlowGrove", rating: 4.8, reviews: 122 },
-  { id: "8", name: "Hand-Poured Soy Candle — Library", price: 32, image: u("1602178141046-ccb56e08b2b1"), category: "new", tag: "New", seller: "PaperWick", rating: 4.9, reviews: 318 },
+  { id: "7", name: "Mushroom Ceramic Lamp", price: 96, image: mushroomLamp, category: "new", tag: "New", seller: "GlowGrove", rating: 4.8, reviews: 122 },
+  { id: "8", name: "Hand-Poured Soy Candle — Library", price: 32, image: libraryCandle, category: "new", tag: "New", seller: "PaperWick", rating: 4.9, reviews: 318 },
   { id: "9", name: "Linen Embroidered Cushion", price: 44, image: u("1584100936595-c0654b55a2e2"), category: "new", seller: "ThreadAndSeed", rating: 4.7, reviews: 88 },
   { id: "10", name: "Crystal Specimen Set", price: 38, image: u("1611425143678-08fc480cafde"), category: "new", seller: "GeoMuse", rating: 4.8, reviews: 210 },
   { id: "11", name: "Carved Wooden Bookends", price: 64, image: u("1512820790803-83ca734da794"), category: "new", seller: "GrainAndChisel", rating: 5.0, reviews: 65 },
